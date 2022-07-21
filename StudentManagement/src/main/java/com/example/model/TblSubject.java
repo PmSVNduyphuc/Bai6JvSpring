@@ -1,5 +1,7 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
@@ -81,6 +83,7 @@ public class TblSubject {
     }
 
     @OneToMany(mappedBy = "tblSubjectByIdSubject")
+    @JsonBackReference
     public Collection<TblMarks> getMarksById() {
         return marksById;
     }

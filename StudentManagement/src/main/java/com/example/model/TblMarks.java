@@ -1,5 +1,9 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -11,6 +15,7 @@ public class TblMarks {
     private Long idSubject;
     private Integer mark;
     private String note;
+
     private TblStudent tblStudentByIdSv;
     private TblSubject tblSubjectByIdSubject;
 
@@ -79,6 +84,7 @@ public class TblMarks {
     }
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_sv", referencedColumnName = "id")
     public TblStudent getTblStudentByIdSv() {
         return tblStudentByIdSv;
@@ -89,6 +95,7 @@ public class TblMarks {
     }
 
     @ManyToOne
+    @JsonIgnoreProperties
     @JoinColumn(name = "id_subject", referencedColumnName = "id")
     public TblSubject getTblSubjectByIdSubject() {
         return tblSubjectByIdSubject;

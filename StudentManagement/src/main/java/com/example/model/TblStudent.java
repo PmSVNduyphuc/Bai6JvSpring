@@ -1,5 +1,9 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
@@ -16,6 +20,8 @@ public class TblStudent {
     private String phone;
     private String email;
     private Integer classId;
+    //@JsonBackReference
+    //@JsonIgnoreProperties
     private Collection<TblMarks> marksById;
     private TblClass tblClassByClassId;
 
