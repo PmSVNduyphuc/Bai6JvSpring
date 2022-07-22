@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.ListStudent;
 import com.example.dto.StudentCount;
 import com.example.model.TblStudent;
 import com.example.service.StudentServiceImpl;
@@ -77,4 +78,12 @@ public class StudentController {
 //        List<StudentCount> list = studentService.countStudent();
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
+
+    @RequestMapping(value = "/lsStudent", method = RequestMethod.GET)
+    public ResponseEntity<ListStudent> listStudent() {
+        List<TblStudent> list = studentService.getAll();
+        ListStudent ls = new ListStudent();
+        ls.setData(list);
+        return new ResponseEntity<>(ls, HttpStatus.OK);
+    }
 }

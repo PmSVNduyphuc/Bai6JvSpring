@@ -84,7 +84,8 @@ public class TblMarks {
     }
 
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "id_sv", referencedColumnName = "id")
     public TblStudent getTblStudentByIdSv() {
         return tblStudentByIdSv;

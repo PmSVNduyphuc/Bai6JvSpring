@@ -1,6 +1,7 @@
 package com.example.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -83,7 +84,8 @@ public class TblSubject {
     }
 
     @OneToMany(mappedBy = "tblSubjectByIdSubject")
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     public Collection<TblMarks> getMarksById() {
         return marksById;
     }
