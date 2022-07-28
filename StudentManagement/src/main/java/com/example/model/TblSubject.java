@@ -16,7 +16,7 @@ public class TblSubject {
     private String description;
     private Integer sem;
     private Integer duration;
-    private Collection<TblMarks> marksById;
+//    private Collection<TblMarks> marksById;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -83,14 +83,14 @@ public class TblSubject {
         return Objects.hash(id, name, description, sem, duration);
     }
 
-    @OneToMany(mappedBy = "tblSubjectByIdSubject")
-    //@JsonBackReference
-    @JsonIgnore
-    public Collection<TblMarks> getMarksById() {
-        return marksById;
-    }
+//    @OneToMany(mappedBy = "tblSubjectByIdSubject")
+//    //@JsonBackReference
+//    @JsonIgnore
+//    public Collection<TblMarks> getMarksById() {
+//        return marksById;
+//    }
 
-    public void setMarksById(Collection<TblMarks> marksById) {
-        this.marksById = marksById;
-    }
+//    public void setMarksById(Collection<TblMarks> marksById) {
+//        this.marksById = marksById;
+//    }
 }

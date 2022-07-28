@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.ListMark;
 import com.example.model.TblMarks;
 import com.example.service.MarkServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,13 @@ public class MarkController {
             markService.deleteMarks(id);
             return ResponseEntity.ok().build();
         }
+    }
+
+    @RequestMapping(value = "/lsMark", method = RequestMethod.GET)
+    public ResponseEntity<ListMark> listMark() {
+        List<TblMarks> list = markService.getAll();
+        ListMark ls = new ListMark();
+        ls.setData(list);
+        return new ResponseEntity<>(ls, HttpStatus.OK);
     }
 }

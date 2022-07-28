@@ -16,8 +16,8 @@ public class TblMarks {
     private Integer mark;
     private String note;
 
-    private TblStudent tblStudentByIdSv;
-    private TblSubject tblSubjectByIdSubject;
+//    private TblStudent tblStudentByIdSv;
+//    private TblSubject tblSubjectByIdSubject;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -30,21 +30,21 @@ public class TblMarks {
         this.id = id;
     }
 
-//    @Basic
-//    @Column(name = "id_sv")
-//    public Integer getIdSv() {
-//        return idSv;
-//    }
+    @Basic
+    @Column(name = "id_sv")
+    public Integer getIdSv() {
+        return idSv;
+    }
 
     public void setIdSv(Integer idSv) {
         this.idSv = idSv;
     }
 
-//    @Basic
-//    @Column(name = "id_subject")
-//    public Long getIdSubject() {
-//        return idSubject;
-//    }
+    @Basic
+    @Column(name = "id_subject")
+    public Long getIdSubject() {
+        return idSubject;
+    }
 
     public void setIdSubject(Long idSubject) {
         this.idSubject = idSubject;
@@ -83,26 +83,26 @@ public class TblMarks {
         return Objects.hash(id, idSv, idSubject, mark, note);
     }
 
-    @ManyToOne
-    //@JsonBackReference
-    @JsonIgnore
-    @JoinColumn(name = "id_sv", referencedColumnName = "id")
-    public TblStudent getTblStudentByIdSv() {
-        return tblStudentByIdSv;
-    }
+//    @ManyToOne
+//    //@JsonBackReference
+//    @JsonIgnore
+//    @JoinColumn(name = "id_sv", referencedColumnName = "id")
+//    public TblStudent getTblStudentByIdSv() {
+//        return tblStudentByIdSv;
+//    }
 
-    public void setTblStudentByIdSv(TblStudent tblStudentByIdSv) {
-        this.tblStudentByIdSv = tblStudentByIdSv;
-    }
-
-    @ManyToOne
-    @JsonIgnoreProperties
-    @JoinColumn(name = "id_subject", referencedColumnName = "id")
-    public TblSubject getTblSubjectByIdSubject() {
-        return tblSubjectByIdSubject;
-    }
-
-    public void setTblSubjectByIdSubject(TblSubject tblSubjectByIdSubject) {
-        this.tblSubjectByIdSubject = tblSubjectByIdSubject;
-    }
+//    public void setTblStudentByIdSv(TblStudent tblStudentByIdSv) {
+//        this.tblStudentByIdSv = tblStudentByIdSv;
+//    }
+//
+////    @ManyToOne
+////    @JsonIgnoreProperties
+////    @JoinColumn(name = "id_subject", referencedColumnName = "id")
+////    public TblSubject getTblSubjectByIdSubject() {
+////        return tblSubjectByIdSubject;
+////    }
+//
+//    public void setTblSubjectByIdSubject(TblSubject tblSubjectByIdSubject) {
+//        this.tblSubjectByIdSubject = tblSubjectByIdSubject;
+//    }
 }

@@ -22,8 +22,8 @@ public class TblStudent {
     private Integer classId;
     //@JsonBackReference
     //@JsonIgnoreProperties
-    private Collection<TblMarks> marksById;
-    private TblClass tblClassByClassId;
+//    private Collection<TblMarks> marksById;
+//    private TblClass tblClassByClassId;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -88,11 +88,11 @@ public class TblStudent {
         this.email = email;
     }
 
-//    @Basic
-//    @Column(name = "class_id")
-//    public Integer getClassId() {
-//        return classId;
-//    }
+    @Basic
+    @Column(name = "class_id")
+    public Integer getClassId() {
+        return classId;
+    }
 
     public void setClassId(Integer classId) {
         this.classId = classId;
@@ -111,22 +111,22 @@ public class TblStudent {
         return Objects.hash(id, studentId, name, address, phone, email, classId);
     }
 
-    @OneToMany(mappedBy = "tblStudentByIdSv")
-    public Collection<TblMarks> getMarksById() {
-        return marksById;
-    }
+//    @OneToMany(mappedBy = "tblStudentByIdSv")
+//    public Collection<TblMarks> getMarksById() {
+//        return marksById;
+//    }
 
-    public void setMarksById(Collection<TblMarks> marksById) {
-        this.marksById = marksById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "class_id", referencedColumnName = "id")
-    public TblClass getTblClassByClassId() {
-        return tblClassByClassId;
-    }
-
-    public void setTblClassByClassId(TblClass tblClassByClassId) {
-        this.tblClassByClassId = tblClassByClassId;
-    }
+//    public void setMarksById(Collection<TblMarks> marksById) {
+//        this.marksById = marksById;
+//    }
+//
+////    @ManyToOne
+////    @JoinColumn(name = "class_id", referencedColumnName = "id")
+////    public TblClass getTblClassByClassId() {
+////        return tblClassByClassId;
+////    }
+//
+//    public void setTblClassByClassId(TblClass tblClassByClassId) {
+//        this.tblClassByClassId = tblClassByClassId;
+//    }
 }

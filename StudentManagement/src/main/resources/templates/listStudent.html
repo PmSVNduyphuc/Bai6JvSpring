@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>List User</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 <body>
@@ -40,6 +41,8 @@
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Class Id</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +58,60 @@
             </tbody>
         </table>
     </nav>
+
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#exampleModal" data-whatever="@mdo">Add new student</button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Student Id:</label>
+                                <input type="text" class="form-control" id="recipient-student-id">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Address:</label>
+                                <input type="text" class="form-control" id="recipient-address">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Phone:</label>
+                                <input type="text" class="form-control" id="recipient-phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Email:</label>
+                                <input type="text" class="form-control" id="recipient-email">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Class Id:</label>
+                                <input type="text" class="form-control" id="recipient-class-id">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="saveStudent" type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
@@ -69,12 +126,91 @@
                 {data: "address"},
                 {data: "phone"},
                 {data: "email"},
-                {data: "tblClassByClassId.id"}
+                {data: "classId"},
+                {
+                    "data": "id",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = '<a onclick="studentEdit(' + data +')" href="/student/' + data + '"> EDIT </a>';
+                        }
+
+                        return data;
+                    }
+                },
+                {
+                    "data": "id",
+                    "render": function(data, type, row, meta){
+                        if(type === 'display'){
+                            data = '<a onclick="deleteEdit(' + data +')" href="/student/" + data > DELETE </a>';
+                        }
+
+                        return data;
+                    }
+                }
             ]
         });
-    } );
-</script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    });
 
-</body>
+    $("#saveStudent").click(function () {
+        var studentId = $("#recipient-student-id").val();
+        var name = $("#recipient-name").val();
+        var address = $("#recipient-address").val();
+        var phone = $("#recipient-phone").val();
+        var email = $("#recipient-email").val();
+        var classId = $("#recipient-class-id").val();
+
+        var id = $("#recipient-id").val();
+
+        var data = {
+            "data": studentId,
+            "data": name,
+            "data": address,
+            "data": phone,
+            "data": email,
+            "data": classId,
+        };
+
+        if (id != 0 && id != "") {
+
+            $.ajax({
+                url: "/student/save",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data:JSON.stringify(data),
+                success: function (response) {
+
+                    $("#exampleModal").modal('hide');
+                    $.notify("Access granted", "Success");
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            });
+        } else {
+            //update user
+            $.ajax({
+                url: "/student/" + id,
+                type: "PUT",
+                dataType: "json",
+                contentType: "application/json",
+                data:JSON.stringify(data),
+                success: function (response) {
+                    //table.reload();
+                    $("#exampleModal").modal('hide');
+                    $.notify("Access granted", "success");
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            });
+        }
+    });
+
+</script>
+<script src="../js/notify.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </html>

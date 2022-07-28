@@ -1,6 +1,9 @@
 package com.example.controller;
 
+import com.example.dto.ListClass;
+import com.example.dto.ListStudent;
 import com.example.model.TblClass;
+import com.example.model.TblStudent;
 import com.example.service.ClassServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,5 +83,13 @@ public class ClassController {
     public ResponseEntity<TblClass> countById(){
         Long tblClass = classService.getCountByName();
         return new ResponseEntity(tblClass, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/lsClass", method = RequestMethod.GET)
+    public ResponseEntity<ListClass> listClass() {
+        List<TblClass> list = classService.getAll();
+        ListClass ls = new ListClass();
+        ls.setData(list);
+        return new ResponseEntity<>(ls, HttpStatus.OK);
     }
 }

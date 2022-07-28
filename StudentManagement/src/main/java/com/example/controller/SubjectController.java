@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.ListSubject;
 import com.example.dto.SubjectCount;
 import com.example.model.TblSubject;
 import com.example.service.SubjectServiceImpl;
@@ -108,5 +109,13 @@ public class SubjectController {
     public ResponseEntity<List<SubjectCount>> getCountBySem() {
         List<SubjectCount> list = subjectService.countBySem();
         return new ResponseEntity<>(list , HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/lsSubject", method = RequestMethod.GET)
+    public ResponseEntity<ListSubject> listClass() {
+        List<TblSubject> list = subjectService.getAll();
+        ListSubject ls = new ListSubject();
+        ls.setData(list);
+        return new ResponseEntity<>(ls, HttpStatus.OK);
     }
 }
