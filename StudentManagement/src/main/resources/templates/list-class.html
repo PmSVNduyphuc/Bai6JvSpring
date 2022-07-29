@@ -26,13 +26,13 @@
         </table>
 
         <button type="button" class="btn btn-primary" data-toggle="modal"
-                data-target="#exampleModal" data-whatever="@mdo">Add new class</button>
+                data-target="#saveModal" data-whatever="@mdo">Add new class</button>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New class</h5>
+                        <h5 class="modal-title" id="saveModalLabel">New class</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -56,7 +56,8 @@
                 </div>
             </div>
         </div>
-        </div>
+
+
     </nav>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -74,7 +75,36 @@
                     "data": "id",
                     "render": function(data, type, row, meta){
                         if(type === 'display'){
-                            data = '<a onclick="classEdit(' + data +')" href="/class/' + data + '"> EDIT </a>';
+                            data = '<button type="button" class="btn btn-primary" data-toggle="modal"\n' +
+                                '                data-target="#editModal" data-whatever="@mdo">Edit</button> ' +
+                                '<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">\n' +
+                                '            <div class="modal-dialog" role="document">\n' +
+                                '                <div class="modal-content">\n' +
+                                '                    <div class="modal-header">\n' +
+                                '                        <h5 class="modal-title" id="editModalLabel">New class</h5>\n' +
+                                '                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+                                '                            <span aria-hidden="true">&times;</span>\n' +
+                                '                        </button>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="modal-body">\n' +
+                                '                        <form>\n' +
+                                '                            <div class="form-group">\n' +
+                                '                                <label for="recipient-name" class="col-form-label">Name:</label>\n' +
+                                '                                <input type="text" class="form-control" id="edit-name">\n' +
+                                '                            </div>\n' +
+                                '                            <div class="form-group">\n' +
+                                '                                <label for="recipient-name" class="col-form-label">Note:</label>\n' +
+                                '                                <input type="text" class="form-control" id="edit-note">\n' +
+                                '                            </div>\n' +
+                                '                        </form>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="modal-footer">\n' +
+                                '                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>\n' +
+                                '                        <button id="editClass" type="button" class="btn btn-primary">Save</button>\n' +
+                                '                    </div>\n' +
+                                '                </div>\n' +
+                                '            </div>\n' +
+                                '        </div>';
                         }
 
                         return data;
@@ -100,10 +130,18 @@
 
         var id = $("#recipient-id").val();
 
+        var newName = $("#edit-name").val();
+        var newNote = $("#edit-note").val();
+
         var data = {
             "name": name,
             "note": note
         };
+
+        var newData = {
+            "name" : newName,
+            "note" : newNote
+        }
 
         if(id != 0 && id != "") {
             //insert new user
@@ -115,12 +153,13 @@
                 data:JSON.stringify(data),
                 success: function (response) {
                     //table.reload();
-                    $("#exampleModal").modal('hide');
+                    $("#saveModal").modal('hide');
                     $.notify("Access granted", "success");
                 },
                 error: function (err) {
                     alert(err);
                 }
+
             });
         } else {
             //update user
@@ -129,10 +168,10 @@
                 type: "PUT",
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: JSON.stringify(newData),
                 success: function (response) {
                     //table.reload();
-                    $("#exampleModal").modal('hide');
+                    $("#editModal").modal('hide');
                     $.notify("Access granted", "success");
                 },
                 error: function (err) {
